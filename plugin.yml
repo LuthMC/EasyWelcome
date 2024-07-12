@@ -1,0 +1,6 @@
+name: SimpleWelcome
+main: Luthfi\SimpleWelcome\Main
+version: 1.0.0
+api: 5.0.0
+author: Luthfi
+description: You cam customize welcome message and sound.
