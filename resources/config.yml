@@ -1,0 +1,4 @@
+messages:
+  title: "Welcome!"  # Support color code!
+  subtitle: "§l§bExample §eMessage"
+  sound: "note.bell"  # Default sound
