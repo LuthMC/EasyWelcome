@@ -47,7 +47,7 @@ class Main extends PluginBase implements Listener {
 
         $player = $event->getPlayer();
         $playerName = $player->getName();
-        $playerPing = $player->getPing();
+        $playerPing = $player->getNetworkSession()->getPing();
 
         $title = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->title);
         $subtitle = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->subtitle);
