@@ -1,5 +1,6 @@
 enabled: true
 
+# add tags and auctionbar! you can use {name} and {ping} tags now!
 messages:
   title: "§fWelcome, §b{name}!"
   subtitle: "§l§bExample Messages"
