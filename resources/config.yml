@@ -1,4 +1,8 @@
+enabled: true
+
 messages:
-  title: "Welcome!"  # Support color code!
-  subtitle: "§l§bExample §eMessage"
+  title: "§fWelcome, §b{name}!"
+  subtitle: "§l§bExample Messages"
+  auctionbar: "Welcome {name}! Your ping is {ping} ms."
   sound: "note.bell"  # Default sound
+  
