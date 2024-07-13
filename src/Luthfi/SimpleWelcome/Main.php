@@ -5,6 +5,7 @@ namespace Luthfi\SimpleWelcome;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\network\mcpe\protocol\SetTitlePacket;
 use pocketmine\network\mcpe\protocol\TextPacket;
@@ -16,9 +17,12 @@ class Main extends PluginBase implements Listener {
     private $subtitle;
     private $auctionbar;
     private $sound;
+    private $joinLeaveEnabled;
+    private $joinMessage;
+    private $leaveMessage;
 
     public function onEnable(): void {
-        $this->saveDefaultConfig();
+        $this->saveDefaultConfig(); // Save the default config.yml if it doesn't exist
         $config = $this->getConfig();
         $this->enabled = $config->get("enabled", true);
         $messages = $config->get("messages");
@@ -26,6 +30,11 @@ class Main extends PluginBase implements Listener {
         $this->subtitle = $messages["subtitle"];
         $this->auctionbar = $messages["auctionbar"];
         $this->sound = $messages["sound"];
+
+        $joinLeaveConfig = $config->get("join_leave");
+        $this->joinLeaveEnabled = $joinLeaveConfig["enabled"];
+        $this->joinMessage = $joinLeaveConfig["join_message"];
+        $this->leaveMessage = $joinLeaveConfig["leave_message"];
 
         $this->getLogger()->info("SimpleWelcome enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -47,11 +56,12 @@ class Main extends PluginBase implements Listener {
 
         $player = $event->getPlayer();
         $playerName = $player->getName();
-        $playerPing = $player->getPing();
+        $playerPing = $player->getNetworkSession()->getPing();
 
         $title = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->title);
         $subtitle = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->subtitle);
         $auctionbar = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->auctionbar);
+        $joinMessage = str_replace("{name}", $playerName, $this->joinMessage);
 
         $soundPacket = new PlaySoundPacket();
         $soundPacket->soundName = $this->sound;
@@ -76,5 +86,29 @@ class Main extends PluginBase implements Listener {
         $auctionbarPacket->type = TextPacket::TYPE_TIP;
         $auctionbarPacket->message = $auctionbar;
         $player->getNetworkSession()->sendDataPacket($auctionbarPacket);
+
+        if ($this->joinLeaveEnabled) {
+            $this->getServer()->broadcastMessage($joinMessage);
+        }
+    }
+
+    /**
+     * Handle player quit event
+     *
+     * @param PlayerQuitEvent $event
+     */
+    public function onPlayerQuit(PlayerQuitEvent $event): void {
+        if (!$this->enabled) {
+            return;
+        }
+
+        $player = $event->getPlayer();
+        $playerName = $player->getName();
+
+        $leaveMessage = str_replace("{name}", $playerName, $this->leaveMessage);
+
+        if ($this->joinLeaveEnabled) {
+            $this->getServer()->broadcastMessage($leaveMessage);
+        }
     }
 }
