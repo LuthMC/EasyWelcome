@@ -1,4 +1,9 @@
+enabled: true
+
+# add tags and auctionbar! you can use {name} and {ping} tags now!
 messages:
-  title: "Welcome!"  # Support color code!
-  subtitle: "§l§bExample §eMessage"
+  title: "§fWelcome, §b{name}!"
+  subtitle: "§l§bExample Messages"
+  auctionbar: "Welcome {name}! Your ping is {ping} ms."
   sound: "note.bell"  # Default sound
+  
