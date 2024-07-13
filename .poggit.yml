@@ -5,4 +5,5 @@ branches:
 projects:
   SimpleWelcome:
     path: ""
+    icon: icon.png
 ...
