@@ -1,5 +1,7 @@
 <?php
 
+# Github: https://github.com/LuthMC
+
 namespace Luthfi\SimpleWelcome;
 
 use pocketmine\plugin\PluginBase;
@@ -22,7 +24,7 @@ class Main extends PluginBase implements Listener {
     private $leaveMessage;
 
     public function onEnable(): void {
-        $this->saveDefaultConfig(); // Save the default config.yml if it doesn't exist
+        $this->saveDefaultConfig();
         $config = $this->getConfig();
         $this->enabled = $config->get("enabled", true);
         $messages = $config->get("messages");
