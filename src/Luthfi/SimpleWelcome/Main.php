@@ -1,7 +1,5 @@
 <?php
 
-# Github: https://github.com/LuthMC/SimpleWelcome
-
 namespace Luthfi\SimpleWelcome;
 
 use pocketmine\plugin\PluginBase;
@@ -60,11 +58,16 @@ class Main extends PluginBase implements Listener {
         $player = $event->getPlayer();
         $playerName = $player->getName();
         $playerPing = $player->getNetworkSession()->getPing();
+        $xyz = round($player->getPosition()->getX()) . ", " . round($player->getPosition()->getY()) . ", " . round($player->getPosition()->getZ());
+        $onlineCount = count($this->getServer()->getOnlinePlayers());
+        $worldName = $player->getWorld()->getDisplayName();
 
-        $title = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->title);
-        $subtitle = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->subtitle);
-        $auctionbar = str_replace(["{name}", "{ping}"], [$playerName, $playerPing], $this->auctionbar);
-        $joinMessage = str_replace("{name}", $playerName, $this->joinMessage);
+        $tags = ["{name}", "{ping}", "{xyz}", "{online}", "{world_name}"];
+        $values = [$playerName, $playerPing, $xyz, $onlineCount, $worldName];
+        $title = str_replace($tags, $values, $this->title);
+        $subtitle = str_replace($tags, $values, $this->subtitle);
+        $auctionbar = str_replace($tags, $values, $this->auctionbar);
+        $joinMessage = str_replace($tags, $values, $this->joinMessage);
 
         $soundPacket = new PlaySoundPacket();
         $soundPacket->soundName = $this->sound;
@@ -108,8 +111,9 @@ class Main extends PluginBase implements Listener {
 
         $player = $event->getPlayer();
         $playerName = $player->getName();
+        $onlineCount = count($this->getServer()->getOnlinePlayers()) - 1;
 
-        $leaveMessage = str_replace("{name}", $playerName, $this->leaveMessage);
+        $leaveMessage = str_replace(["{name}", "{online}"], [$playerName, $onlineCount], $this->leaveMessage);
 
         if ($this->joinLeaveEnabled) {
             $event->setQuitMessage("");
