@@ -1,10 +1,16 @@
 enabled: true
 
-# add tags and auctionbar! you can use {name} and {ping} tags now!
+# Available Tags
+# {name} = Players Name
+# {world_name} = World Name
+# {ping} = show their ping
+# {xyz} = show their coordinates
+# {online} = show how many player in servers
+
 messages:
   title: "§fWelcome, §b{name}!"
   subtitle: "§l§bExample Messages"
-  auctionbar: "Welcome {name}! Your ping is {ping} ms."
+  auctionbar: "{online} Players | Your ping is {ping} ms."
   sound: "note.bell"  # Default sound
 
 join_leave:
