@@ -1,6 +1,6 @@
 <?php
 
-# Github: https://github.com/LuthMC
+# Github: https://github.com/LuthMC/SimpleWelcome
 
 namespace Luthfi\SimpleWelcome;
 
@@ -11,14 +11,15 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\network\mcpe\protocol\SetTitlePacket;
 use pocketmine\network\mcpe\protocol\TextPacket;
+use pocketmine\player\Player;
 
 class Main extends PluginBase implements Listener {
 
     private $enabled;
     private $title;
     private $subtitle;
-    private $auctionbar;
     private $sound;
+    private $auctionbar;
     private $joinLeaveEnabled;
     private $joinMessage;
     private $leaveMessage;
@@ -30,8 +31,8 @@ class Main extends PluginBase implements Listener {
         $messages = $config->get("messages");
         $this->title = $messages["title"];
         $this->subtitle = $messages["subtitle"];
-        $this->auctionbar = $messages["auctionbar"];
         $this->sound = $messages["sound"];
+        $this->auctionbar = $messages["auctionbar"];
 
         $joinLeaveConfig = $config->get("join_leave");
         $this->joinLeaveEnabled = $joinLeaveConfig["enabled"];
@@ -90,6 +91,7 @@ class Main extends PluginBase implements Listener {
         $player->getNetworkSession()->sendDataPacket($auctionbarPacket);
 
         if ($this->joinLeaveEnabled) {
+            $event->setJoinMessage("");
             $this->getServer()->broadcastMessage($joinMessage);
         }
     }
@@ -110,6 +112,7 @@ class Main extends PluginBase implements Listener {
         $leaveMessage = str_replace("{name}", $playerName, $this->leaveMessage);
 
         if ($this->joinLeaveEnabled) {
+            $event->setQuitMessage("");
             $this->getServer()->broadcastMessage($leaveMessage);
         }
     }
