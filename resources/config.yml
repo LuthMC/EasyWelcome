@@ -4,7 +4,7 @@ enabled: true
 # {name} = Players Name
 # {world_name} = World Name
 # {ping} = show their ping
-# {xyz} = show their coordinates
+# {x} {y} {z} = show their coordinates
 # {online} = show how many player in servers
 
 messages:
@@ -17,3 +17,11 @@ join_leave:
   enabled: true
   join_message: "{name} has joined the game"
   leave_message: "{name} has left the game"
+
+teleport:
+  enabled: true
+  world: "world"
+  x: 0
+  y: 100
+  z: 0
+  

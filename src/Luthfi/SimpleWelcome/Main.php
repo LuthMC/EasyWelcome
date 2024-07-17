@@ -1,5 +1,7 @@
 <?php
 
+# Github: https://github.com/LuthMC
+
 namespace Luthfi\SimpleWelcome;
 
 use pocketmine\plugin\PluginBase;
@@ -10,6 +12,7 @@ use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\network\mcpe\protocol\SetTitlePacket;
 use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
+use pocketmine\world\Position;
 
 class Main extends PluginBase implements Listener {
 
@@ -21,6 +24,11 @@ class Main extends PluginBase implements Listener {
     private $joinLeaveEnabled;
     private $joinMessage;
     private $leaveMessage;
+    private $teleportEnabled;
+    private $teleportWorld;
+    private $teleportX;
+    private $teleportY;
+    private $teleportZ;
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
@@ -37,12 +45,19 @@ class Main extends PluginBase implements Listener {
         $this->joinMessage = $joinLeaveConfig["join_message"];
         $this->leaveMessage = $joinLeaveConfig["leave_message"];
 
-        $this->getLogger()->info("SimpleWelcome enabled!");
+        $teleportConfig = $config->get("teleport");
+        $this->teleportEnabled = $teleportConfig["enabled"];
+        $this->teleportWorld = $teleportConfig["world"];
+        $this->teleportX = $teleportConfig["x"];
+        $this->teleportY = $teleportConfig["y"];
+        $this->teleportZ = $teleportConfig["z"];
+
+        $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     public function onDisable(): void {
-        $this->getLogger()->info("SimpleWelcome disabled!");
+        $this->getLogger()->info("SimpleWelcome Disabled!");
     }
 
     /**
@@ -58,12 +73,29 @@ class Main extends PluginBase implements Listener {
         $player = $event->getPlayer();
         $playerName = $player->getName();
         $playerPing = $player->getNetworkSession()->getPing();
-        $xyz = round($player->getPosition()->getX()) . ", " . round($player->getPosition()->getY()) . ", " . round($player->getPosition()->getZ());
+        $x = round($player->getPosition()->getX());
+        $y = round($player->getPosition()->getY());
+        $z = round($player->getPosition()->getZ());
         $onlineCount = count($this->getServer()->getOnlinePlayers());
         $worldName = $player->getWorld()->getDisplayName();
+        
+        if ($this->teleportEnabled) {
+            $world = $this->getServer()->getWorldManager()->getWorldByName($this->teleportWorld);
+            if ($world !== null) {
+                $position = new Position($this->teleportX, $this->teleportY, $this->teleportZ, $world);
+                $player->teleport($position);
+                $x = round($position->getX());
+                $y = round($position->getY());
+                $z = round($position->getZ());
+                $worldName = $world->getDisplayName();
+            } else {
+                $this->getLogger()->warning("World '{$this->teleportWorld}' not found. Teleportation failed.");
+            }
+        }
 
-        $tags = ["{name}", "{ping}", "{xyz}", "{online}", "{world_name}"];
-        $values = [$playerName, $playerPing, $xyz, $onlineCount, $worldName];
+        // Replace tags with actual values
+        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}"];
+        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName];
         $title = str_replace($tags, $values, $this->title);
         $subtitle = str_replace($tags, $values, $this->subtitle);
         $auctionbar = str_replace($tags, $values, $this->auctionbar);
@@ -71,9 +103,9 @@ class Main extends PluginBase implements Listener {
 
         $soundPacket = new PlaySoundPacket();
         $soundPacket->soundName = $this->sound;
-        $soundPacket->x = $player->getPosition()->getX();
-        $soundPacket->y = $player->getPosition()->getY();
-        $soundPacket->z = $player->getPosition()->getZ();
+        $soundPacket->x = $x;
+        $soundPacket->y = $y;
+        $soundPacket->z = $z;
         $soundPacket->volume = 1;
         $soundPacket->pitch = 1;
         $player->getNetworkSession()->sendDataPacket($soundPacket);
