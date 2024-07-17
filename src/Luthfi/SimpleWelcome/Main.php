@@ -13,6 +13,7 @@ use pocketmine\network\mcpe\protocol\SetTitlePacket;
 use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
+use Luthfi\SimpleWelcome\command\SetWorldCommand;
 
 class Main extends PluginBase implements Listener {
 
