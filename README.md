@@ -5,7 +5,7 @@ You can customize message and sound!
 • Can customize welcome messages.                                       
 • Can customize sound.                                       
 • Can customize join/leave messages.                                       
-• {name} and {ping} tags.                                       
+• Available Tags.                                      
 
 ### 🔎 Found Bugs
 If you found any bugs please use [this](https://github.com/LuthMC/SimpleWelcome/issues)!
