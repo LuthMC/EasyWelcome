@@ -14,7 +14,7 @@ class SetWorldCommand extends Command {
 
     public function __construct(Main $plugin) {
         parent::__construct("sw", "Set the teleport world and coordinates", "/sw setworld", []);
-        $this->setPermission("welcomplugin.command.setworld");
+        $this->setPermission("simplewelcome.command.setworld");
         $this->plugin = $plugin;
     }
 
