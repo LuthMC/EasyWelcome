@@ -17,3 +17,11 @@ join_leave:
   enabled: true
   join_message: "{name} has joined the game"
   leave_message: "{name} has left the game"
+
+teleport:
+  enabled: true
+  world: "world"
+  x: 0
+  y: 100
+  z: 0
+  
