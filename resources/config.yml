@@ -4,7 +4,7 @@ enabled: true
 # {name} = Players Name
 # {world_name} = World Name
 # {ping} = show their ping
-# {xyz} = show their coordinates
+# {x} {y} {z} = show their coordinates
 # {online} = show how many player in servers
 
 messages:
