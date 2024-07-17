@@ -54,6 +54,7 @@ class Main extends PluginBase implements Listener {
 
         $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $this->getServer()->getCommandMap()->register("sw", new SetWorldCommand($this));
     }
 
     public function onDisable(): void {
@@ -93,7 +94,6 @@ class Main extends PluginBase implements Listener {
             }
         }
 
-        // Replace tags with actual values
         $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}"];
         $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName];
         $title = str_replace($tags, $values, $this->title);
