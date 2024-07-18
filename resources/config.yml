@@ -25,3 +25,7 @@ teleport:
   y: 100
   z: 0
   
+effects:
+  blindness: 10
+  nausea: 10
+  
