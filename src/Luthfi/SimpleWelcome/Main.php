@@ -29,6 +29,18 @@ class Main extends PluginBase implements Listener {
 
         $this->simpleWelcome = new SimpleWelcome($this);
 
+        $asciiArt = <<<EOT
+ _____ _                 _       _    _      _                          
+/  ___(_)               | |     | |  | |    | |                         
+\ `--. _ _ __ ___  _ __ | | ___ | |  | | ___| | ___ ___  _ __ ___   ___ 
+ `--. \ | '_ ` _ \| '_ \| |/ _ \| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \
+/\__/ / | | | | | | |_) | |  __/\  /\  /  __/ | (_| (_) | | | | | |  __/
+\____/|_|_| |_| |_| .__/|_|\___| \/  \/ \___|_|\___\___/|_| |_| |_|\___|
+                  | |                                                   
+                  |_|                                                   
+EOT;
+
+        $this->getLogger()->info($asciiArt);
         $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->getServer()->getCommandMap()->register("sw", new SetWorldCommand($this));
