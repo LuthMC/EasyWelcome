@@ -14,8 +14,8 @@ enabled: true
 
 messages:
   title: "§fWelcome, §b{name}!"
-  subtitle: "§l§bExample Messages"
-  auctionbar: "{online} Players | Your ping is {ping} ms."
+  subtitle: "Example Messages §7| §fTime: {time} WIB"
+  auctionbar: "§l{online} Players | Your ping is {ping} ms."
   sound: "note.bell"  # Default sound
 
 join_leave:
