@@ -12,9 +12,6 @@ use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\network\mcpe\protocol\SetTitlePacket;
 use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
-use pocketmine\world\Position;
-use pocketmine\world\World;
-use pocketmine\entity\effect\Effect;
 use pocketmine\entity\effect\VanillaEffects;
 use pocketmine\entity\effect\EffectInstance;
 use Luthfi\SimpleWelcome\command\SetWorldCommand;
@@ -25,8 +22,6 @@ class Main extends PluginBase implements Listener {
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
-        $config = $this->getConfig();
-
         $this->simpleWelcome = new SimpleWelcome($this);
 
         $asciiArt = <<<EOT
@@ -59,8 +54,9 @@ EOT;
         $player = $event->getPlayer();
         $this->simpleWelcome->handlePlayerJoin($player);
 
+        // Apply effects
         $config = $this->getConfig();
-        $effectsConfig = $config->get("effects");
+        $effectsConfig = $config->get("effects", []);
         foreach ($effectsConfig as $effectName => $duration) {
             $effect = VanillaEffects::fromString($effectName);
             if ($effect !== null) {
@@ -75,21 +71,8 @@ EOT;
      * @param PlayerQuitEvent $event
      */
     public function onPlayerQuit(PlayerQuitEvent $event): void {
-        $config = $this->getConfig();
-        if (!$config->get("enabled", true)) {
-            return;
-        }
-
         $player = $event->getPlayer();
-        $playerName = $player->getName();
-        $onlineCount = count($this->getServer()->getOnlinePlayers()) - 1;
-
-        $leaveMessage = str_replace(["{name}", "{online}"], [$playerName, $onlineCount], $config->get("leave_message"));
-
-        if ($config->get("join_leave")["enabled"]) {
-            $event->setQuitMessage("");
-            $this->getServer()->broadcastMessage($leaveMessage);
-        }
+        $this->simpleWelcome->handlePlayerQuit($player);
     }
 
     public function sendTitle(Player $player, string $title, string $subtitle): void {
@@ -105,12 +88,11 @@ EOT;
     }
 
     public function playSound(Player $player, string $sound): void {
-        $position = $player->getPosition();
         $soundPacket = new PlaySoundPacket();
         $soundPacket->soundName = $sound;
-        $soundPacket->x = $position->getX();
-        $soundPacket->y = $position->getY();
-        $soundPacket->z = $position->getZ();
+        $soundPacket->x = $player->getPosition()->getX();
+        $soundPacket->y = $player->getPosition()->getY();
+        $soundPacket->z = $player->getPosition()->getZ();
         $soundPacket->volume = 1;
         $soundPacket->pitch = 1;
         $player->getNetworkSession()->sendDataPacket($soundPacket);
