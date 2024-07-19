@@ -8,7 +8,7 @@ commands:
   sw:
     description: "Set the teleport world and coordinates"
     usage: "/sw setworld"
-    permission: simplewelcome.command.setworld
+    permission: simplewelcome.setworld
 permissions:
-  simplewelcome.command.setworld:
+  simplewelcome.setworld:
     default: op
