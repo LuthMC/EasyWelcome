@@ -1,4 +1,4 @@
-# SimpleWelcome (V1.0.0)
+# SimpleWelcome (V1.1.0)
 You can customize message and sound!
 
 ### 💡 Feature

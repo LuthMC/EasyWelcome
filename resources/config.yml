@@ -6,11 +6,16 @@ enabled: true
 # {ping} = show their ping
 # {x} {y} {z} = show their coordinates
 # {online} = show how many player in servers
+#
+# SimpleWelcome V1.1.0-BETA
+#
+# {date} = Date tags
+# {time} = Time tags
 
 messages:
   title: "§fWelcome, §b{name}!"
-  subtitle: "§l§bExample Messages"
-  auctionbar: "{online} Players | Your ping is {ping} ms."
+  subtitle: "Example Messages §7| §fTime: {time} WIB"
+  auctionbar: "§l{online} Players | Your ping is {ping} ms."
   sound: "note.bell"  # Default sound
 
 join_leave:
@@ -25,3 +30,5 @@ teleport:
   y: 100
   z: 0
   
+time:
+  timezone: "Asia/Jakarta" # NOTE: use this https://php.net/manual/en/timezones.php

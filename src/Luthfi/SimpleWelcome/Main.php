@@ -14,7 +14,8 @@ use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
-use Luthfi\SimpleWelcome\command\SetWorldCommand;
+use DateTime;
+use DateTimeZone;
 
 class Main extends PluginBase implements Listener {
 
@@ -31,6 +32,7 @@ class Main extends PluginBase implements Listener {
     private $teleportX;
     private $teleportY;
     private $teleportZ;
+    private $timezone;
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
@@ -41,6 +43,19 @@ class Main extends PluginBase implements Listener {
         $this->subtitle = $messages["subtitle"];
         $this->sound = $messages["sound"];
         $this->auctionbar = $messages["auctionbar"];
+
+        $asciiArt = <<<EOT
+ _____ _                 _       _    _      _                          
+/  ___(_)               | |     | |  | |    | |                         
+\ `--. _ _ __ ___  _ __ | | ___ | |  | | ___| | ___ ___  _ __ ___   ___ 
+ `--. \ | '_ ` _ \| '_ \| |/ _ \| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \
+/\__/ / | | | | | | |_) | |  __/\  /\  /  __/ | (_| (_) | | | | | |  __/
+\____/|_|_| |_| |_| .__/|_|\___| \/  \/ \___|_|\___\___/|_| |_| |_|\___|
+                  | |                                                   
+                  |_|                                                   
+EOT;
+
+        $this->getLogger()->info($asciiArt);
 
         $joinLeaveConfig = $config->get("join_leave");
         $this->joinLeaveEnabled = $joinLeaveConfig["enabled"];
@@ -54,13 +69,22 @@ class Main extends PluginBase implements Listener {
         $this->teleportY = $teleportConfig["y"];
         $this->teleportZ = $teleportConfig["z"];
 
+        $this->timezone = $config->get("time")["timezone"];
+
         $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getServer()->getCommandMap()->register("sw", new SetWorldCommand($this));
     }
 
     public function onDisable(): void {
         $this->getLogger()->info("SimpleWelcome Disabled!");
+    }
+
+    private function getCurrentDateTime(): array {
+        $dateTime = new DateTime("now", new DateTimeZone($this->timezone));
+        return [
+            "date" => $dateTime->format("Y-m-d"),
+            "time" => $dateTime->format("H:i:s")
+        ];
     }
 
     /**
@@ -82,6 +106,8 @@ class Main extends PluginBase implements Listener {
         $onlineCount = count($this->getServer()->getOnlinePlayers());
         $worldName = $player->getWorld()->getDisplayName();
         
+        $dateTime = $this->getCurrentDateTime();
+
         if ($this->teleportEnabled) {
             $world = $this->getServer()->getWorldManager()->getWorldByName($this->teleportWorld);
             if ($world !== null) {
@@ -96,8 +122,8 @@ class Main extends PluginBase implements Listener {
             }
         }
 
-        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}"];
-        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName];
+        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}", "{date}", "{time}"];
+        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName, $dateTime["date"], $dateTime["time"]];
         $title = str_replace($tags, $values, $this->title);
         $subtitle = str_replace($tags, $values, $this->subtitle);
         $auctionbar = str_replace($tags, $values, $this->auctionbar);
@@ -147,7 +173,9 @@ class Main extends PluginBase implements Listener {
         $playerName = $player->getName();
         $onlineCount = count($this->getServer()->getOnlinePlayers()) - 1;
 
-        $leaveMessage = str_replace(["{name}", "{online}"], [$playerName, $onlineCount], $this->leaveMessage);
+        $dateTime = $this->getCurrentDateTime();
+
+        $leaveMessage = str_replace(["{name}", "{online}", "{date}", "{time}"], [$playerName, $onlineCount, $dateTime["date"], $dateTime["time"]], $this->leaveMessage);
 
         if ($this->joinLeaveEnabled) {
             $event->setQuitMessage("");
