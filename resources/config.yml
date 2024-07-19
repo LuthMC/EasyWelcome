@@ -31,4 +31,4 @@ teleport:
   z: 0
   
 time:
-  timezone: "WIB" # NOTE: use this https://php.net/manual/en/timezones.php
+  timezone: "Asia/Jakarta" # NOTE: use this https://php.net/manual/en/timezones.php
