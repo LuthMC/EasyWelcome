@@ -6,6 +6,11 @@ enabled: true
 # {ping} = show their ping
 # {x} {y} {z} = show their coordinates
 # {online} = show how many player in servers
+#
+# SimpleWelcome V1.1.0-BETA
+#
+# {date} = Date tags
+# {time} = Time tags
 
 messages:
   title: "§fWelcome, §b{name}!"
@@ -25,7 +30,5 @@ teleport:
   y: 100
   z: 0
   
-effects:
-  blindness: 10
-  nausea: 10
-  
+time:
+  timezone: "WIB" # NOTE: use this https://php.net/manual/en/timezones.php
