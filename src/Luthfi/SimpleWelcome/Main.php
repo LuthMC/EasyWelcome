@@ -44,6 +44,19 @@ class Main extends PluginBase implements Listener {
         $this->sound = $messages["sound"];
         $this->auctionbar = $messages["auctionbar"];
 
+        $asciiArt = <<<EOT
+ _____ _                 _       _    _      _                          
+/  ___(_)               | |     | |  | |    | |                         
+\ `--. _ _ __ ___  _ __ | | ___ | |  | | ___| | ___ ___  _ __ ___   ___ 
+ `--. \ | '_ ` _ \| '_ \| |/ _ \| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \
+/\__/ / | | | | | | |_) | |  __/\  /\  /  __/ | (_| (_) | | | | | |  __/
+\____/|_|_| |_| |_| .__/|_|\___| \/  \/ \___|_|\___\___/|_| |_| |_|\___|
+                  | |                                                   
+                  |_|                                                   
+EOT;
+
+        $this->getLogger()->info($asciiArt);
+
         $joinLeaveConfig = $config->get("join_leave");
         $this->joinLeaveEnabled = $joinLeaveConfig["enabled"];
         $this->joinMessage = $joinLeaveConfig["join_message"];
