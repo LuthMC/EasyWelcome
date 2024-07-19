@@ -14,7 +14,6 @@ use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\entity\effect\VanillaEffects;
 use pocketmine\entity\effect\EffectInstance;
-use Luthfi\SimpleWelcome\command\SetWorldCommand;
 
 class Main extends PluginBase implements Listener {
 
@@ -38,7 +37,6 @@ EOT;
         $this->getLogger()->info($asciiArt);
         $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getServer()->getCommandMap()->register("sw", new SetWorldCommand($this));
     }
 
     public function onDisable(): void {
@@ -54,7 +52,6 @@ EOT;
         $player = $event->getPlayer();
         $this->simpleWelcome->handlePlayerJoin($player);
 
-        // Apply effects
         $config = $this->getConfig();
         $effectsConfig = $config->get("effects", []);
         foreach ($effectsConfig as $effectName => $duration) {
