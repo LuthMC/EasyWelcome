@@ -1,14 +1,6 @@
-name: SimpleWelcome
+name: SimpleWelcome-V1.1.0-BETA
 main: Luthfi\SimpleWelcome\Main
 version: 1.0.0
 api: 5.0.0
 author: Luthfi
 description: You can customize welcome message and sound.
-commands:
-  sw:
-    description: "Set the teleport world and coordinates"
-    usage: "/sw setworld"
-    permission: simplewelcome.setworld
-permissions:
-  simplewelcome.setworld:
-    default: op
