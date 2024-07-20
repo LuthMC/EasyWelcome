@@ -16,6 +16,7 @@ use pocketmine\world\Position;
 use pocketmine\world\World;
 use DateTime;
 use DateTimeZone;
+use Luthfi\SimpleWelcome\command;
 
 class Main extends PluginBase implements Listener {
 
@@ -43,6 +44,7 @@ class Main extends PluginBase implements Listener {
         $this->subtitle = $messages["subtitle"];
         $this->sound = $messages["sound"];
         $this->auctionbar = $messages["auctionbar"];
+        $this->getServer()->getCommandMap()->register("simplewelcome", new SimpleWelcomeCommand($this));
 
         $asciiArt = <<<EOT
  _____ _                 _       _    _      _                          
