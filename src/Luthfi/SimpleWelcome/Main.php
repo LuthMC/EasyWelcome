@@ -1,6 +1,7 @@
 <?php
 
 # Github: https://github.com/LuthMC
+# Discord: LuthMC#5110
 
 namespace Luthfi\SimpleWelcome;
 
@@ -14,12 +15,8 @@ use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
-use pocketmine\command\Command;
-use pocketmine\command\CommandSender;
-use pocketmine\command\CommandExecutor;
 use DateTime;
 use DateTimeZone;
-use Luthfi\SimpleWelcome\command;
 
 class Main extends PluginBase implements Listener {
 
@@ -47,7 +44,6 @@ class Main extends PluginBase implements Listener {
         $this->subtitle = $messages["subtitle"];
         $this->sound = $messages["sound"];
         $this->auctionbar = $messages["auctionbar"];
-        $this->getServer()->getCommandMap()->register("simplewelcome", new SimpleWelcomeCommand($this));
 
         $asciiArt = <<<EOT
  _____ _                 _       _    _      _                          
@@ -127,8 +123,11 @@ EOT;
             }
         }
 
-        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}", "{date}", "{time}"];
-        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName, $dateTime["date"], $dateTime["time"]];
+        $serverIp = $this->getServer()->getIp();
+        $serverPort = $this->getServer()->getPort();
+
+        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}", "{date}", "{time}", "{ip}", "{port}"];
+        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName, $dateTime["date"], $dateTime["time"], $serverIp, $serverPort];
         $title = str_replace($tags, $values, $this->title);
         $subtitle = str_replace($tags, $values, $this->subtitle);
         $auctionbar = str_replace($tags, $values, $this->auctionbar);
@@ -180,7 +179,11 @@ EOT;
 
         $dateTime = $this->getCurrentDateTime();
 
-        $leaveMessage = str_replace(["{name}", "{online}", "{date}", "{time}"], [$playerName, $onlineCount, $dateTime["date"], $dateTime["time"]], $this->leaveMessage);
+        $leaveMessage = str_replace(
+            ["{name}", "{online}", "{date}", "{time}", "{ip}", "{port}"],
+            [$playerName, $onlineCount, $dateTime["date"], $dateTime["time"], $this->getServer()->getIp(), $this->getServer()->getPort()],
+            $this->leaveMessage
+        );
 
         if ($this->joinLeaveEnabled) {
             $event->setQuitMessage("");
