@@ -18,7 +18,7 @@ use DateTime;
 use DateTimeZone;
 use Luthfi\SimpleWelcome\command;
 
-class Main extends PluginBase implements Listener {
+class SimpleWelcome extends PluginBase implements Listener {
 
     private $enabled;
     private $title;
