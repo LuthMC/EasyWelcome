@@ -1,16 +1,16 @@
 enabled: true
 
+# SimpleWelcome V1.1.0
+# Github: https://github.com/LuthMC
+#
 # Available Tags
 # {name} = Players Name
 # {world_name} = World Name
 # {ping} = show their ping
 # {x} {y} {z} = show their coordinates
 # {online} = show how many player in servers
-#
-# SimpleWelcome V1.1.0-BETA
-#
-# {date} = Date tags
-# {time} = Time tags
+# {date} = show date
+# {time} = show time
 
 messages:
   title: "§fWelcome, §b{name}!"
