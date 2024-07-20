@@ -5,7 +5,6 @@ namespace Luthfi\SimpleWelcome;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
-use pocketmine\plugin\PluginBase;
 use LootSpace369\lsform\SimpleForm;
 use LootSpace369\lsform\CustomForm;
 use LootSpace369\lsform\ModalForm;
@@ -15,7 +14,7 @@ class SimpleWelcomeCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("sw", "Open SimpleWelcome settings", "/sw");
+        parent::__construct("sw", "SimpleWelcome commands", "/sw <subcommand>");
         $this->setPermission("simplewelcome.command.sw");
         $this->plugin = $plugin;
     }
@@ -30,7 +29,20 @@ class SimpleWelcomeCommand extends Command {
             return;
         }
 
-        $this->sendMainForm($sender);
+        if (empty($args)) {
+            $sender->sendMessage("Usage: /sw help");
+        } elseif ($args[0] === "help") {
+            $this->sendHelpMessage($sender);
+        } elseif ($args[0] === "ui") {
+            $this->sendMainForm($sender);
+        } else {
+            $sender->sendMessage("Unknown subcommand. Usage: /sw help");
+        }
+    }
+
+    private function sendHelpMessage(Player $player) {
+        $player->sendMessage("===== SimpleWelcome =====");
+        $player->sendMessage("- /sw ui");
     }
 
     private function sendMainForm(Player $player) {
