@@ -1,6 +1,7 @@
 <?php
 
 # Github: https://github.com/LuthMC
+# Discord: LuthMC#5110
 
 namespace Luthfi\SimpleWelcome;
 
@@ -122,8 +123,11 @@ EOT;
             }
         }
 
-        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}", "{date}", "{time}"];
-        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName, $dateTime["date"], $dateTime["time"]];
+        $serverIp = $this->getServer()->getIp();
+        $serverPort = $this->getServer()->getPort();
+
+        $tags = ["{name}", "{ping}", "{x}", "{y}", "{z}", "{online}", "{world_name}", "{date}", "{time}", "{ip}", "{port}"];
+        $values = [$playerName, $playerPing, $x, $y, $z, $onlineCount, $worldName, $dateTime["date"], $dateTime["time"], $serverIp, $serverPort];
         $title = str_replace($tags, $values, $this->title);
         $subtitle = str_replace($tags, $values, $this->subtitle);
         $auctionbar = str_replace($tags, $values, $this->auctionbar);
@@ -175,7 +179,11 @@ EOT;
 
         $dateTime = $this->getCurrentDateTime();
 
-        $leaveMessage = str_replace(["{name}", "{online}", "{date}", "{time}"], [$playerName, $onlineCount, $dateTime["date"], $dateTime["time"]], $this->leaveMessage);
+        $leaveMessage = str_replace(
+            ["{name}", "{online}", "{date}", "{time}", "{ip}", "{port}"],
+            [$playerName, $onlineCount, $dateTime["date"], $dateTime["time"], $this->getServer()->getIp(), $this->getServer()->getPort()],
+            $this->leaveMessage
+        );
 
         if ($this->joinLeaveEnabled) {
             $event->setQuitMessage("");
