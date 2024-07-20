@@ -4,13 +4,14 @@ enabled: true
 # Github: https://github.com/LuthMC
 #
 # Available Tags
-# {name} = Players Name
-# {world_name} = World Name
-# {ping} = show their ping
-# {x} {y} {z} = show their coordinates
-# {online} = show how many player in servers
-# {date} = show date
-# {time} = show time
+# {name} = players names.
+# {world_name} = world name.
+# {ping} = show their ping.
+# {x} {y} {z} = show their coordinates.
+# {online} = show how many player in servers.
+# {date} = show date.
+# {time} = show time.
+# {ip} {port} = will show ip and port servers.
 
 messages:
   title: "§fWelcome, §b{name}!"
