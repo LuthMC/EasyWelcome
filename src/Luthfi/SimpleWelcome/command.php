@@ -6,9 +6,9 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
-use Luthfi\SimpleWelcome\libs\LootSpace369\lsform\SimpleForm;
-use Luthfi\SimpleWelcome\libs\LootSpace369\lsform\CustomForm;
-use Luthfi\SimpleWelcome\libs\LootSpace369\lsform\ModalForm;
+use LootSpace369\lsform\SimpleForm;
+use LootSpace369\lsform\CustomForm;
+use LootSpace369\lsform\ModalForm;
 
 class SimpleWelcomeCommand extends Command {
 
