@@ -4,11 +4,13 @@ version: 1.1.0
 api: 5.0.0
 author: Luthfi
 description: You can customize welcome message and sound.
+
 commands:
   sw:
-    description: Open SimpleWelcome settings
-    usage: /sw
+    description: SimpleWelcome commands
+    usage: /sw <subcommand>
     permission: simplewelcome.command.sw
+
 permissions:
   simplewelcome.command.sw:
     description: Allows the use of the /sw command
