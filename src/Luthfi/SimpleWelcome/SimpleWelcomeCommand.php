@@ -31,12 +31,19 @@ class SimpleWelcomeCommand extends Command {
 
         if (empty($args)) {
             $sender->sendMessage("Usage: /sw help");
-        } elseif ($args[0] === "help") {
-            $this->sendHelpMessage($sender);
-        } elseif ($args[0] === "ui") {
-            $this->sendMainForm($sender);
-        } else {
-            $sender->sendMessage("Unknown subcommand. Usage: /sw help");
+            return;
+        }
+
+        switch ($args[0]) {
+            case "help":
+                $this->sendHelpMessage($sender);
+                break;
+            case "ui":
+                $this->sendMainForm($sender);
+                break;
+            default:
+                $sender->sendMessage("Unknown subcommand. Usage: /sw help");
+                break;
         }
     }
 
