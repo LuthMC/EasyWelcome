@@ -36,7 +36,7 @@ class Main extends PluginBase implements Listener {
     private $teleportY;
     private $teleportZ;
     private $timezone;
-    private $configVersion = "1.0.1";
+    private $configVersion = "1.0.0";
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
