@@ -16,6 +16,7 @@ use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
 use Luthfi\SimpleWelcome\UpdateNotifier;
+use pocketmine\scheduler\ClosureTask;
 use DateTime;
 use DateTimeZone;
 
@@ -77,8 +78,11 @@ EOT;
         $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $notifier = new UpdateNotifier($this, $this->configVersion);
-        $notifier->checkForUpdates();
-        $notifier->checkConfigVersion();
+
+        $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function() use ($notifier): void {
+            $notifier->checkForUpdates();
+            $notifier->checkConfigVersion();
+        }), 20 * 5);
     }
 
     public function onDisable(): void {
