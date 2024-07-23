@@ -4,6 +4,7 @@ namespace Luthfi\SimpleWelcome;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Internet;
+use pocketmine\utils\InternetRequestResult;
 
 class UpdateNotifier {
 
@@ -18,14 +19,17 @@ class UpdateNotifier {
     public function checkForUpdates(): void {
         $url = "https://raw.githubusercontent.com/LuthMC/SimpleWelcome/main/plugin.yml";
         $response = Internet::getURL($url);
-        if ($response !== null) {
-            $remotePluginYml = yaml_parse($response);
+        if ($response instanceof InternetRequestResult && $response->getCode() === 200) {
+            $responseBody = $response->getBody();
+            $remotePluginYml = yaml_parse($responseBody);
             if (isset($remotePluginYml['version'])) {
                 $remoteVersion = $remotePluginYml['version'];
                 if (version_compare($this->plugin->getDescription()->getVersion(), $remoteVersion, '<')) {
                     $this->plugin->getLogger()->notice("A new version of SimpleWelcome is available: v$remoteVersion. Please update!");
                 }
             }
+        } else {
+            $this->plugin->getLogger()->warning("Failed to check for updates. HTTP status code: " . ($response ? $response->getCode() : 'unknown'));
         }
     }
 
