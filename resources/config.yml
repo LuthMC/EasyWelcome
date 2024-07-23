@@ -1,5 +1,7 @@
 enabled: true
 
+config_version: "1.0.0" # DO NOT CHANGE THIS!
+
 # SimpleWelcome V1.1.0
 # Github: https://github.com/LuthMC
 #
