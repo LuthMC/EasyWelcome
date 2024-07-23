@@ -15,6 +15,7 @@ use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
+use Luthfi\SimpleWelcome\UpdateNotifier;
 use DateTime;
 use DateTimeZone;
 
@@ -34,6 +35,7 @@ class Main extends PluginBase implements Listener {
     private $teleportY;
     private $teleportZ;
     private $timezone;
+    private $configVersion = "1.0.0";
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
@@ -74,6 +76,9 @@ EOT;
 
         $this->getLogger()->info("SimpleWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        $notifier = new UpdateNotifier($this, $this->configVersion);
+        $notifier->checkForUpdates();
+        $notifier->checkConfigVersion();
     }
 
     public function onDisable(): void {
