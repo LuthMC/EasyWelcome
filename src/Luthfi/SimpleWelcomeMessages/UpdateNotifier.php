@@ -1,6 +1,6 @@
 <?php
 
-namespace Luthfi\SimpleWelcome;
+namespace Luthfi\SimpleWelcomeMessages;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Internet;

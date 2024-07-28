@@ -3,7 +3,7 @@
 # Github: https://github.com/LuthMC
 # Discord: LuthMC#5110
 
-namespace Luthfi\SimpleWelcome;
+namespace Luthfi\SimpleWelcomeMessages;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
@@ -15,7 +15,7 @@ use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
-use Luthfi\SimpleWelcome\UpdateNotifier;
+use Luthfi\SimpleWelcomeMessages\UpdateNotifier;
 use pocketmine\scheduler\ClosureTask;
 use DateTime;
 use DateTimeZone;
@@ -48,19 +48,6 @@ class Main extends PluginBase implements Listener {
         $this->sound = $messages["sound"];
         $this->auctionbar = $messages["auctionbar"];
 
-        $asciiArt = <<<EOT
- _____ _                 _       _    _      _                          
-/  ___(_)               | |     | |  | |    | |                         
-\ `--. _ _ __ ___  _ __ | | ___ | |  | | ___| | ___ ___  _ __ ___   ___ 
- `--. \ | '_ ` _ \| '_ \| |/ _ \| |/\| |/ _ \ |/ __/ _ \| '_ ` _ \ / _ \
-/\__/ / | | | | | | |_) | |  __/\  /\  /  __/ | (_| (_) | | | | | |  __/
-\____/|_|_| |_| |_| .__/|_|\___| \/  \/ \___|_|\___\___/|_| |_| |_|\___|
-                  | |                                                   
-                  |_|                                                   
-EOT;
-
-        $this->getLogger()->info($asciiArt);
-
         $joinLeaveConfig = $config->get("join_leave");
         $this->joinLeaveEnabled = $joinLeaveConfig["enabled"];
         $this->joinMessage = $joinLeaveConfig["join_message"];
@@ -75,7 +62,7 @@ EOT;
 
         $this->timezone = $config->get("time")["timezone"];
 
-        $this->getLogger()->info("SimpleWelcome Enabled!");
+        $this->getLogger()->info("SimpleWelcomeMessages Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $notifier = new UpdateNotifier($this, $this->configVersion);
 
@@ -86,7 +73,7 @@ EOT;
     }
 
     public function onDisable(): void {
-        $this->getLogger()->info("SimpleWelcome Disabled!");
+        $this->getLogger()->info("SimpleWelcomeMessages Disabled!");
     }
 
     private function getCurrentDateTime(): array {
