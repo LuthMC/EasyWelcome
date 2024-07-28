@@ -3,7 +3,7 @@ build-by-default: true
 branches:
 - stable
 projects:
-  SimpleWelcome:
+  SimpleWelcomeMessages:
     path: ""
     icon: icon.png
 ...
