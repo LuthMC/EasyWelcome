@@ -1,18 +1,17 @@
 enabled: true
-
-config_version: "1.0.0" # DO NOT CHANGE THIS!
-
-# SimpleWelcomeMessages V1.1.0
+# EasyWelcome V1.1.1
 # Github: https://github.com/LuthMC
 #
 # You can see all available tags on wiki!
-# https://github.com/LuthMC/SimpleWelcomeMessages/wiki/Available-Tags
+# https://github.com/LuthMC/EasyWelcome/wiki/Available-Tags
+
+config_version: "1.1.0" # Don't Change This!
 
 messages:
   title: "§fWelcome, §b{name}!"
   subtitle: "Example Messages §7| §fTime: {time} WIB"
   auctionbar: "§l{online} Players | Your ping is {ping} ms."
-  sound: "note.bell"  # Default sound
+  sound: "note.bell"
 
 join_leave:
   enabled: true
