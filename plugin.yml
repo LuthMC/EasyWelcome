@@ -1,6 +1,7 @@
-name: SimpleWelcomeMessages
-main: Luthfi\SimpleWelcomeMessages\Main
-version: 1.1.0
+name: EasyWelcome
+main: Luthfi\EasyWelcome\Main
+version: 1.1.1
 api: 5.0.0
 author: Luthfi
-description: You can customize welcome message and sound.
+description: A simple welcome plugins.
+website: https://github.com/LuthMC/EasyWelcome
