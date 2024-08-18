@@ -12,7 +12,7 @@ use pocketmine\network\mcpe\protocol\TextPacket;
 use pocketmine\player\Player;
 use pocketmine\world\Position;
 use pocketmine\world\World;
-use Luthfi\SimpleWelcomeMessages\UpdateNotifier;
+use Luthfi\EasyWelcome\UpdateNotifier;
 use pocketmine\scheduler\ClosureTask;
 use DateTime;
 use DateTimeZone;
@@ -33,7 +33,7 @@ class Main extends PluginBase implements Listener {
     private $teleportY;
     private $teleportZ;
     private $timezone;
-    private $configVersion = "1.0.0";
+    private $configVersion = "1.1.0";
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
