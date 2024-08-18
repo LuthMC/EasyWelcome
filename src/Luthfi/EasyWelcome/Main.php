@@ -103,18 +103,14 @@ class Main extends PluginBase implements Listener {
         $dateTime = $this->getCurrentDateTime();
 
         if ($this->teleportEnabled) {
-            $world = $this->getServer()->getWorldManager()->getWorldByName($this->teleportWorld);
-            if ($world !== null) {
-                $position = new Position($this->teleportX, $this->teleportY, $this->teleportZ, $world);
-                $player->teleport($position);
-                $x = round($position->getX());
-                $y = round($position->getY());
-                $z = round($position->getZ());
-                $worldName = $world->getDisplayName();
-            } else {
-                $this->getLogger()->warning("World '{$this->teleportWorld}' not found. Teleportation failed.");
-            }
+        $world = $this->getServer()->getWorldManager()->getWorldByName($this->teleportWorld);
+        if ($world !== null) {
+            $position = new Position($this->teleportX, $this->teleportY, $this->teleportZ, $world);
+            $player->teleport($position);
+        } else {
+            $this->getLogger()->warning("World '{$this->teleportWorld}' not found. Teleportation failed.");
         }
+    }
 
         $serverIp = $this->getServer()->getIp();
         $serverPort = $this->getServer()->getPort();
