@@ -1,6 +1,6 @@
 <?php
 
-namespace Luthfi\SimpleWelcomeMessages;
+namespace Luthfi\EasyWelcome;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Internet;
@@ -17,7 +17,7 @@ class UpdateNotifier {
     }
 
     public function checkForUpdates(): void {
-        $url = "https://raw.githubusercontent.com/LuthMC/SimpleWelcome/main/plugin.yml";
+        $url = "https://raw.githubusercontent.com/LuthMC/EasyWelcome/master/plugin.yml";
         $response = Internet::getURL($url);
         if ($response instanceof InternetRequestResult && $response->getCode() === 200) {
             $responseBody = $response->getBody();
@@ -25,7 +25,7 @@ class UpdateNotifier {
             if (isset($remotePluginYml['version'])) {
                 $remoteVersion = $remotePluginYml['version'];
                 if (version_compare($this->plugin->getDescription()->getVersion(), $remoteVersion, '<')) {
-                    $this->plugin->getLogger()->notice("A new version of SimpleWelcome is available: v$remoteVersion. Please update!");
+                    $this->plugin->getLogger()->notice("A new version of EasyWelcome is available: v$remoteVersion. Please update!");
                 }
             }
         } else {
