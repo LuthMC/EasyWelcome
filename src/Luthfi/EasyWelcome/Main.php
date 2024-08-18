@@ -1,9 +1,6 @@
 <?php
 
-# Github: https://github.com/LuthMC
-# Discord: LuthMC#5110
-
-namespace Luthfi\SimpleWelcomeMessages;
+namespace Luthfi\EasyWelcome;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
@@ -62,7 +59,7 @@ class Main extends PluginBase implements Listener {
 
         $this->timezone = $config->get("time")["timezone"];
 
-        $this->getLogger()->info("SimpleWelcomeMessages Enabled!");
+        $this->getLogger()->info("EasyWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $notifier = new UpdateNotifier($this, $this->configVersion);
 
@@ -73,7 +70,7 @@ class Main extends PluginBase implements Listener {
     }
 
     public function onDisable(): void {
-        $this->getLogger()->info("SimpleWelcomeMessages Disabled!");
+        $this->getLogger()->info("EasyWelcome Disabled!");
     }
 
     private function getCurrentDateTime(): array {
