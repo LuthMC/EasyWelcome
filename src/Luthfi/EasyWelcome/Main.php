@@ -59,7 +59,6 @@ class Main extends PluginBase implements Listener {
 
         $this->timezone = $config->get("time")["timezone"];
 
-        $this->getLogger()->info("EasyWelcome Enabled!");
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $notifier = new UpdateNotifier($this, $this->configVersion);
 
@@ -67,10 +66,6 @@ class Main extends PluginBase implements Listener {
             $notifier->checkForUpdates();
             $notifier->checkConfigVersion();
         }), 20 * 5);
-    }
-
-    public function onDisable(): void {
-        $this->getLogger()->info("EasyWelcome Disabled!");
     }
 
     private function getCurrentDateTime(): array {
